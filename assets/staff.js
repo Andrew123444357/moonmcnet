@@ -1,0 +1,1 @@
+document.getElementById('staffGrid').innerText = 'No staff added yet. Edit assets/staff.json';

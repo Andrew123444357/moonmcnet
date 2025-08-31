@@ -1,0 +1,1 @@
+const SERVER_IP = 'play.yourserver.net'; console.log('Server IP:', SERVER_IP);

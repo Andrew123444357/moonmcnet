@@ -1,0 +1,4 @@
+.logo-center {text-align:center;margin:20px;}
+.logo-img {max-width:300px;}
+.menu {display:flex;gap:10px;justify-content:center;}
+.disabled {opacity:0.5;pointer-events:none;}
