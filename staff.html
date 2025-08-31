@@ -10,19 +10,26 @@
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
-  <canvas id="space" aria-hidden="true"></canvas>
-  <div class="vignette" aria-hidden="true"></div>
+  <div class="bg">
+    <div class="stars"></div>
+    <div class="glow glow-a"></div>
+    <div class="glow glow-b"></div>
+    <div class="orbit orbit-1"></div>
+    <div class="orbit orbit-2"></div>
+    <div class="orbit orbit-3"></div>
+  </div>
 
   <div class="page">
-    <a class="back" href="/">← Go Back</a>
-    <h1>Our Staff</h1>
-    <p class="subtitle">Meet our staff!</p>
+    <div class="inner">
+      <a class="back" href="/">← Go Back</a>
+      <h1>Our Staff</h1>
+      <p class="subtitle">Meet our staff!</p>
 
-    <div id="staffGrid" class="grid"></div>
-    <p id="emptyMsg" class="empty hidden">No staff added yet. Edit <code>assets/staff.json</code> to add people.</p>
+      <div id="staffGrid" class="grid"></div>
+      <p id="emptyMsg" class="empty hidden">No staff added yet. Edit <code>assets/staff.json</code>.</p>
+    </div>
   </div>
 
   <script src="assets/staff.js"></script>
-  <script src="assets/script.js"></script>
 </body>
 </html>
