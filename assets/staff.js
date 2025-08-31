@@ -40,8 +40,9 @@ async function loadStaff(){
     });
   }catch(e){
     console.error(e);
-    document.getElementById('emptyMsg').textContent = 'Could not load staff.json';
-    document.getElementById('emptyMsg').classList.remove('hidden');
+    const m = document.getElementById('emptyMsg');
+    m.textContent = 'Could not load staff.json';
+    m.classList.remove('hidden');
   }
 }
 loadStaff();
