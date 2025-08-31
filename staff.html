@@ -3,13 +3,24 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Staff</title>
+  <title>Our Staff — MoonMC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
-  <a href="index.html">← Back</a>
-  <h1>Staff</h1>
-  <div id="staffGrid"></div>
+  <div class="stars"></div>
+
+  <div class="page">
+    <a class="back" href="/">← Go Back</a>
+    <h1>Our Staff</h1>
+    <p class="subtitle">Meet our staff!</p>
+
+    <div id="staffGrid" class="grid"></div>
+    <p id="emptyMsg" class="empty hidden">No staff added yet. Edit <code>assets/staff.json</code> to add people.</p>
+  </div>
+
   <script src="assets/staff.js"></script>
 </body>
 </html>
