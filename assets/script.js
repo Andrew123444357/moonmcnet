@@ -1,21 +1,68 @@
-// Settings
-const SERVER_IP = 'play.moon-mc.net';
+// Minimal, bespoke particle effect (subtle bokeh + pixel sparks)
+(function(){
+  const canvas = document.getElementById('fx');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d', { alpha: true });
 
-// Toast
-const toast = document.getElementById('toast') || (() => {
-  const el = document.createElement('div');
-  el.id = 'toast'; el.className = 'toast'; el.setAttribute('aria-live','polite');
-  document.body.appendChild(el); return el;
+  let W=0,H=0, P=[], PIX=[];
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+
+    const dots = Math.min(110, Math.floor(W*H/22000));
+    const pix  = Math.min(60, Math.floor(W*H/50000));
+
+    P = new Array(dots).fill(0).map(()=>({
+      x: Math.random()*W,
+      y: Math.random()*H,
+      r: Math.random()*1.4+0.6,
+      s: Math.random()*0.3+0.05,
+      t: Math.random()*Math.PI*2
+    }));
+
+    PIX = new Array(pix).fill(0).map(()=>({
+      x: Math.random()*W,
+      y: Math.random()*H,
+      sz: Math.floor(Math.random()*3+2),    // pixel square size
+      sp: Math.random()*0.25+0.05,
+      rot: Math.random()*Math.PI,
+      tw: Math.random()*Math.PI*2
+    }));
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function frame(t){
+    ctx.clearRect(0,0,W,H);
+
+    // Bokeh dots
+    for(const p of P){
+      p.x += p.s*0.6; p.y += p.s*0.35;
+      if(p.x>W+5) p.x = -5;
+      if(p.y>H+5) p.y = -5;
+      const a = 0.35 + 0.35*Math.sin(t/900 + p.t);
+      ctx.globalAlpha = a;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.283); ctx.fillStyle = '#e6e9ef'; ctx.fill();
+    }
+
+    // Pixel sparks (minecraft-y)
+    ctx.globalAlpha = 0.35;
+    for(const s of PIX){
+      s.y -= s.sp;
+      if(s.y < -6) { s.y = H+6; s.x = Math.random()*W; }
+      const a = 0.5 + 0.5*Math.sin(t/800 + s.tw);
+      ctx.save();
+      ctx.translate(s.x, s.y);
+      ctx.rotate(s.rot);
+      ctx.fillStyle = `rgba(230,233,239,${0.25*a})`;
+      ctx.fillRect(-s.sz/2, -s.sz/2, s.sz, s.sz);
+      ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+
+    if(!reduce) requestAnimationFrame(frame);
+  }
+  if(!reduce) requestAnimationFrame(frame);
 })();
-function showToast(msg='Copied'){ toast.textContent = msg; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'), 1100); }
-
-// Copy IP
-const copyBtn = document.getElementById('copyIp');
-async function doCopy(){ try{ await navigator.clipboard.writeText(SERVER_IP); showToast('Copied'); } catch { alert('IP: ' + SERVER_IP); } }
-if(copyBtn){ copyBtn.addEventListener('click', doCopy); copyBtn.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') doCopy(); }); }
-
-// Animated star field overlay (light, minimal)
-const cvs = document.getElementById('stars'); const ctx = cvs.getContext('2d', {alpha:true}); let W=0,H=0,ST=[];
-function size(){ W=cvs.width=window.innerWidth; H=cvs.height=window.innerHeight; const n=Math.min(180,Math.floor(W*H/15000)); ST=new Array(n).fill(0).map(()=>({x:Math.random()*W,y:Math.random()*H,z:Math.random()*.9+.1,s:Math.random()*.3+.05,r:Math.random()*1+0.3,t:Math.random()*6.28})); }
-function loop(t){ ctx.clearRect(0,0,W,H); for(const s of ST){ s.x+=s.s*s.z; s.y+=s.s*.35; if(s.x>W+8) s.x=-8; if(s.y>H+8) s.y=-8; const a=.5+.5*Math.sin(t/800+s.t)*s.z; ctx.globalAlpha=a*.6; ctx.beginPath(); ctx.arc(s.x,s.y,s.r*(.6+s.z),0,6.283); ctx.fillStyle='#e6e9ef'; ctx.fill(); } ctx.globalAlpha=1; requestAnimationFrame(loop); }
-size(); window.addEventListener('resize', size); requestAnimationFrame(loop);
