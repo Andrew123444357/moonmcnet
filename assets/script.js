@@ -1,4 +1,4 @@
-// Copy target
+// IP to copy
 const SERVER_IP = 'play.moon-mc.net';
 
 // Toast
@@ -10,7 +10,7 @@ function showToast(msg='Copied'){
   setTimeout(()=>toast.classList.remove('show'), 1100);
 }
 
-// Click-to-copy on players chip
+// Click-to-copy for Online Players
 const players = document.getElementById('players');
 async function copyIP(){
   try{
