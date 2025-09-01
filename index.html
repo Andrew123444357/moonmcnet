@@ -12,29 +12,31 @@
   <link rel="icon" href="assets/logo-placeholder.svg">
 </head>
 <body>
-  <!-- Background -->
+  <!-- Minecraft-ish animated background -->
   <div class="bg">
-    <div class="mesh"></div>
-    <div class="ring"></div>
-    <div class="specks"></div>
+    <div class="chunk-grid"></div>
+    <div class="clouds"></div>
+    <div class="aurora"></div>
   </div>
 
-  <!-- Centered content -->
   <main class="center">
     <img class="logo" src="assets/logo-placeholder.svg" alt="MoonMC logo" />
 
+    <!-- Click to copy IP -->
     <button id="players" class="chip" type="button" title="Click to copy IP">
       ? Online Players
     </button>
 
+    <!-- Button grid -->
     <nav class="menu">
       <a class="pill" href="https://discord.com/channels/1408337450958458921/1411037949331509390" target="_blank" rel="noopener">Forum</a>
       <a class="pill" href="https://discord.com/channels/1408337450958458921/1408337451532947459" target="_blank" rel="noopener">Support</a>
       <a class="pill disabled" href="#" aria-disabled="true">Store</a>
       <a class="pill" href="staff.html">Staff</a>
-      <a class="pill" href="https://discord.com/channels/1408337450958458921/1408337452061556777" target="_blank" rel="noopener">Rules</a>
+      <a class="pill" href="rules.html">Rules</a>
     </nav>
 
+    <!-- Socials -->
     <div class="socials">
       <a class="icon" href="https://discord.gg/UxBUxxcsV2" target="_blank" rel="noopener" aria-label="Discord">
         <!-- upright discord logo -->
@@ -51,7 +53,6 @@
     <footer class="foot">© 2025 MoonMC — All rights reserved.</footer>
   </main>
 
-  <!-- Toast -->
   <div id="toast" class="toast" aria-live="polite">Copied</div>
   <script src="assets/script.js"></script>
 </body>
