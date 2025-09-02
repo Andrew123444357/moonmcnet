@@ -1,67 +1,41 @@
-// Minimal, bespoke particle effect (subtle bokeh + pixel sparks)
+// Subtle sparkle field (lightweight + original)
 (function(){
-  const canvas = document.getElementById('fx');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d', { alpha: true });
-
-  let W=0,H=0, P=[], PIX=[];
+  const c = document.getElementById('fx');
+  if(!c) return;
+  const x = c.getContext('2d', {alpha:true});
+  let W=0,H=0, D=[], P=[];
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function resize(){
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-
-    const dots = Math.min(110, Math.floor(W*H/22000));
-    const pix  = Math.min(60, Math.floor(W*H/50000));
-
-    P = new Array(dots).fill(0).map(()=>({
-      x: Math.random()*W,
-      y: Math.random()*H,
-      r: Math.random()*1.4+0.6,
-      s: Math.random()*0.3+0.05,
-      t: Math.random()*Math.PI*2
-    }));
-
-    PIX = new Array(pix).fill(0).map(()=>({
-      x: Math.random()*W,
-      y: Math.random()*H,
-      sz: Math.floor(Math.random()*3+2),    // pixel square size
-      sp: Math.random()*0.25+0.05,
-      rot: Math.random()*Math.PI,
-      tw: Math.random()*Math.PI*2
-    }));
+  function size(){
+    W = c.width = innerWidth;
+    H = c.height = innerHeight;
+    const dots = Math.min(120, Math.floor(W*H/22000));
+    const pix  = Math.min(64,  Math.floor(W*H/50000));
+    D = Array.from({length:dots},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+0.6,s:Math.random()*0.3+0.06,t:Math.random()*6.283}));
+    P = Array.from({length:pix },()=>({x:Math.random()*W,y:Math.random()*H,sz:Math.floor(Math.random()*3+2),sp:Math.random()*0.25+0.05,rot:Math.random()*Math.PI,tw:Math.random()*6.283}));
   }
-  resize();
-  window.addEventListener('resize', resize);
+  size(); addEventListener('resize', size);
 
   function frame(t){
-    ctx.clearRect(0,0,W,H);
-
-    // Bokeh dots
+    x.clearRect(0,0,W,H);
+    // bokeh dots
+    for(const d of D){
+      d.x += d.s*0.6; d.y += d.s*0.35;
+      if(d.x>W+6) d.x=-6; if(d.y>H+6) d.y=-6;
+      const a = 0.35 + 0.35*Math.sin(t/900 + d.t);
+      x.globalAlpha = a; x.beginPath(); x.arc(d.x,d.y,d.r,0,6.283); x.fillStyle = '#e6e9ef'; x.fill();
+    }
+    // pixel sparks
+    x.globalAlpha = 0.35;
     for(const p of P){
-      p.x += p.s*0.6; p.y += p.s*0.35;
-      if(p.x>W+5) p.x = -5;
-      if(p.y>H+5) p.y = -5;
-      const a = 0.35 + 0.35*Math.sin(t/900 + p.t);
-      ctx.globalAlpha = a;
-      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.283); ctx.fillStyle = '#e6e9ef'; ctx.fill();
+      p.y -= p.sp; if(p.y<-6){ p.y=H+6; p.x=Math.random()*W; }
+      const a = 0.5 + 0.5*Math.sin(t/800 + p.tw);
+      x.save(); x.translate(p.x,p.y); x.rotate(p.rot);
+      x.fillStyle = `rgba(230,233,239,${0.25*a})`;
+      x.fillRect(-p.sz/2, -p.sz/2, p.sz, p.sz);
+      x.restore();
     }
-
-    // Pixel sparks (minecraft-y)
-    ctx.globalAlpha = 0.35;
-    for(const s of PIX){
-      s.y -= s.sp;
-      if(s.y < -6) { s.y = H+6; s.x = Math.random()*W; }
-      const a = 0.5 + 0.5*Math.sin(t/800 + s.tw);
-      ctx.save();
-      ctx.translate(s.x, s.y);
-      ctx.rotate(s.rot);
-      ctx.fillStyle = `rgba(230,233,239,${0.25*a})`;
-      ctx.fillRect(-s.sz/2, -s.sz/2, s.sz, s.sz);
-      ctx.restore();
-    }
-    ctx.globalAlpha = 1;
-
+    x.globalAlpha = 1;
     if(!reduce) requestAnimationFrame(frame);
   }
   if(!reduce) requestAnimationFrame(frame);
