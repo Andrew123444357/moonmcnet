@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MoonMC — Panel</title>
-  <meta name="description" content="MoonMC server panel" />
+  <title>MoonMC Network — Panel</title>
+  <meta name="description" content="MoonMC Network panel: forums, help, rules and staff." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -12,24 +12,24 @@
   <link rel="icon" href="assets/logo-placeholder.svg">
 </head>
 <body>
-  <!-- Background: your GIF + gradient + particles + film grain -->
+  <!-- Background (original gradient mesh + tiny particles) -->
   <div class="bg">
-    <img class="bg-gif" src="assets/bg.gif" alt="" aria-hidden="true">
-    <div class="bg-gradient" aria-hidden="true"></div>
+    <div class="mesh"></div>
+    <div class="vignette"></div>
     <canvas id="fx" aria-hidden="true"></canvas>
-    <div class="grain" aria-hidden="true"></div>
   </div>
 
-  <!-- Minimal, centered stack -->
   <main class="shell">
     <img class="logo" src="assets/logo-placeholder.svg" alt="MoonMC" />
+    <h1 class="brand">MoonMC Network</h1>
+    <p class="tagline">A Fresh New Place, An Endless Space.</p>
 
     <nav class="menu">
-      <a class="pill" href="https://discord.com/channels/1408337450958458921/1411037949331509390" target="_blank" rel="noopener">Forum</a>
-      <a class="pill" href="https://discord.com/channels/1408337450958458921/1408337451532947459" target="_blank" rel="noopener">Support</a>
-      <a class="pill disabled" href="#" aria-disabled="true">Store</a>
-      <a class="pill" href="staff.html">Staff</a>
+      <a class="pill" href="https://discord.com/channels/1408337450958458921/1411037949331509390" target="_blank" rel="noopener">Forums</a>
+      <a class="pill" href="https://discord.com/channels/1408337450958458921/1408337451532947459" target="_blank" rel="noopener">Help</a>
+      <span class="pill disabled" title="Store is coming soon" aria-disabled="true">Store</span>
       <a class="pill" href="rules.html">Rules</a>
+      <a class="pill" href="staff.html">Staff</a>
     </nav>
 
     <footer class="foot">© 2025 MoonMC — All rights reserved.</footer>
